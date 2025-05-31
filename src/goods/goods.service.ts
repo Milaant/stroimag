@@ -36,7 +36,7 @@ export class GoodsService {
             throw new HttpException('На складе недостаточно товара для продажи', HttpStatus.BAD_REQUEST);
         }
 
-        if (dto.ammount * goods.price < dto.money) {
+        if (dto.ammount * goods.price > dto.money) {
             throw new HttpException('Недостаточно денег для покупки товара', HttpStatus.BAD_REQUEST);
         }
 
