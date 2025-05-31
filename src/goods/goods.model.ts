@@ -1,10 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { Column, DataType, Model, Table } from "sequelize-typescript";
+import { Column, DataType, ForeignKey, Model, Table } from "sequelize-typescript";
+import { Manufacturer } from "src/manufacturers/manufacturers.model";
 
 interface GoodsCreationAttrs {
     name: string;
     art: number;
-    manufacturer: string;
+    manufacturer: number;
     price: number;
     unit: string;
     weight: number;
@@ -26,9 +27,10 @@ export class Goods extends Model<Goods, GoodsCreationAttrs> {
     @Column({type: DataType.STRING, allowNull: false})
     name: string;
 
-    @ApiProperty({example: 'ООО "Главстрой"', description: 'Производитель'})
-    @Column({type: DataType.STRING, allowNull: false})
-    manufacturer: string;
+    @ApiProperty({example: '1', description: 'Производитель'})
+    @ForeignKey(() => Manufacturer)
+    @Column({type: DataType.INTEGER, allowNull: false})
+    manufacturer: number;
 
     @ApiProperty({example: '100.00', description: 'Цена за единицу'})
     @Column({type: DataType.FLOAT, allowNull: false})
